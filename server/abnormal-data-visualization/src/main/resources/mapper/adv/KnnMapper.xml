@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hfut.adv.mapper.KnnMapper">
+  <resultMap id="BaseResultMap" type="cn.hfut.adv.domain.Knn">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="site" jdbcType="VARCHAR" property="site" />
+    <result column="value" jdbcType="DOUBLE" property="value" />
+    <result column="knn" jdbcType="DOUBLE" property="knn" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `time`, site, `value`, knn
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from knn
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from knn
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.hfut.adv.domain.Knn">
+    insert into knn (id, `time`, site, 
+      `value`, knn)
+    values (#{id,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{site,jdbcType=VARCHAR}, 
+      #{value,jdbcType=DOUBLE}, #{knn,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.hfut.adv.domain.Knn">
+    insert into knn
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="time != null">
+        `time`,
+      </if>
+      <if test="site != null">
+        site,
+      </if>
+      <if test="value != null">
+        `value`,
+      </if>
+      <if test="knn != null">
+        knn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="site != null">
+        #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=DOUBLE},
+      </if>
+      <if test="knn != null">
+        #{knn,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.hfut.adv.domain.Knn">
+    update knn
+    <set>
+      <if test="time != null">
+        `time` = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="site != null">
+        site = #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        `value` = #{value,jdbcType=DOUBLE},
+      </if>
+      <if test="knn != null">
+        knn = #{knn,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.hfut.adv.domain.Knn">
+    update knn
+    set `time` = #{time,jdbcType=TIMESTAMP},
+      site = #{site,jdbcType=VARCHAR},
+      `value` = #{value,jdbcType=DOUBLE},
+      knn = #{knn,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="listKnnSelective" parameterType="cn.hfut.adv.domain.dto.KnnDTO" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from knn
+    <where>
+      <if test="site != null">
+        and site = #{site,jdbcType=VARCHAR}
+      </if>
+      <if test="startTime != null">
+        and `time` &gt;= #{startTime,jdbcType=VARCHAR}
+      </if>
+      <if test="endTime != null">
+        and `time` &lt;= #{endTime,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+</mapper>

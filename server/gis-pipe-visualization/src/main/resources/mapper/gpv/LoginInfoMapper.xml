@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hfut.gpv.mapper.LoginInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.hfut.gpv.domain.LoginInfo">
+    <id column="info_id" jdbcType="BIGINT" property="infoId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="ipaddr" jdbcType="VARCHAR" property="ipaddr" />
+    <result column="login_location" jdbcType="VARCHAR" property="loginLocation" />
+    <result column="browser" jdbcType="VARCHAR" property="browser" />
+    <result column="os" jdbcType="VARCHAR" property="os" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="msg" jdbcType="VARCHAR" property="msg" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+  </resultMap>
+
+  <resultMap id="LoginHistoryMap" type="cn.hfut.gpv.domain.dto.LoginHistoryDTO">
+    <result column="ipaddr" jdbcType="VARCHAR" property="ipaddr" />
+    <result column="login_location" jdbcType="VARCHAR" property="loginLocation" />
+    <result column="browser" jdbcType="VARCHAR" property="browser" />
+    <result column="os" jdbcType="VARCHAR" property="os" />
+    <result column="count(*)" jdbcType="INTEGER" property="loginCount" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    info_id, user_name, ipaddr, login_location, browser, os, `status`, msg, login_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_login_info
+    where info_id = #{infoId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_login_info
+    where info_id = #{infoId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" parameterType="cn.hfut.gpv.domain.LoginInfo">
+    insert into sys_login_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="infoId != null">
+        info_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="ipaddr != null">
+        ipaddr,
+      </if>
+      <if test="loginLocation != null">
+        login_location,
+      </if>
+      <if test="browser != null">
+        browser,
+      </if>
+      <if test="os != null">
+        os,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="msg != null">
+        msg,
+      </if>
+
+        login_time
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="infoId != null">
+        #{infoId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="ipaddr != null">
+        #{ipaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="loginLocation != null">
+        #{loginLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null">
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null">
+        #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="msg != null">
+        #{msg,jdbcType=VARCHAR},
+      </if>
+      NOW()
+    </trim>
+  </insert>
+
+  <select id="selectLoginInfoList" parameterType="cn.hfut.gpv.domain.LoginInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_login_info
+    <where>
+      <if test="ipaddr != null and ipaddr != ''">
+        AND ipaddr like concat('%', #{ipaddr}, '%')
+      </if>
+    </where>
+    order by info_id desc
+  </select>
+
+  <select id="selectFirstLoginInfo" parameterType="cn.hfut.gpv.domain.LoginInfo" resultMap="LoginHistoryMap">
+    select
+    ipaddr, login_location, browser, os, login_time
+    from sys_login_info
+    where user_name like concat('%',#{userName,jdbcType=VARCHAR},'%')
+    order by info_id
+    limit 1
+  </select>
+
+  <select id="countLogin" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*)
+    from sys_login_info
+    <where>
+      <if test="userName != null">
+        OR user_name like concat('%',#{userName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="ipaddr != null and ipaddr != ''">
+        OR ipaddr like concat('%', #{ipaddr}, '%')
+      </if>
+    </where>
+  </select>
+</mapper>

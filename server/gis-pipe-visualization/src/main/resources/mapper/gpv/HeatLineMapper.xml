@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hfut.gpv.mapper.HeatLineMapper">
+  <resultMap id="BaseResultMap" type="cn.hfut.gpv.domain.HeatLine">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="line_number" jdbcType="INTEGER" property="lineNumber" />
+    <result column="pipe_id" jdbcType="INTEGER" property="pipeId" />
+    <result column="ribbon_nodes" typeHandler="cn.hfut.gpv.config.JSONArrayTypeHandler" property="ribbonNodes" />
+    <result column="heat_line_nodes" typeHandler="cn.hfut.gpv.config.JSONArrayTypeHandler" property="heatLineNodes" />
+    <result column="heat_line_weight" typeHandler="cn.hfut.gpv.config.JSONArrayTypeHandler" property="heatLineWeight" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, line_number, pipe_id, ribbon_nodes, heat_line_nodes, heat_line_weight
+  </sql>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from heat_line
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPipeId" parameterType="java.lang.Integer">
+    delete from heat_line
+    where pipe_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="cn.hfut.gpv.domain.HeatLine">
+    insert into heat_line
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="lineNumber != null">
+        line_number,
+      </if>
+      <if test="pipeId != null">
+        pipe_id,
+      </if>
+      <if test="ribbonNodes != null">
+        ribbon_nodes,
+      </if>
+      <if test="heatLineNodes != null">
+        heat_line_nodes,
+      </if>
+      <if test="heatLineWeight != null">
+        heat_line_weight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lineNumber != null">
+        #{lineNumber,jdbcType=INTEGER},
+      </if>
+      <if test="pipeId != null">
+        #{pipeId,jdbcType=INTEGER},
+      </if>
+      <if test="ribbonNodes != null">
+        #{ribbonNodes,typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+      <if test="heatLineNodes != null">
+        #{heatLineNodes,typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+      <if test="heatLineWeight != null">
+        #{heatLineWeight,typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByIdSelective" parameterType="cn.hfut.gpv.domain.HeatLine">
+    update heat_line
+    <set>
+      <if test="lineNumber != null">
+        line_number = #{lineNumber,jdbcType=INTEGER},
+      </if>
+      <if test="pipeId != null">
+        pipe_id = #{pipeId,jdbcType=VARCHAR},
+      </if>
+      <if test="ribbonNodes != null">
+        ribbon_nodes = #{ribbonNodes,typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+      <if test="heatLineNodes != null">
+        heat_line_nodes = #{heatLineNodes,typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+      <if test="heatLineWeight != null">
+        heat_line_weight = #{heatLineWeight,typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPipeId" parameterType="cn.hfut.gpv.domain.HeatLine">
+    update heat_line
+    <set>
+      <if test="lineNumber != null">
+        line_number = #{lineNumber,jdbcType=INTEGER},
+      </if>
+      <if test="ribbonNodes != null">
+        ribbon_nodes = #{ribbonNodes,typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+      <if test="heatLineNodes != null">
+        heat_line_nodes = #{heatLineNodes,typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+      <if test="heatLineWeight != null">
+        heat_line_weight = #{heatLineWeight,typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+    </set>
+    where pipe_id = #{pipeId,jdbcType=INTEGER}
+  </update>
+  <select id="listHeatLine" parameterType="cn.hfut.gpv.domain.HeatLine" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from heat_line
+    <where>
+      <if test="id != null">
+        AND id = #{id,jdbcType = INTEGER}
+      </if>
+      <if test="lineNumber != null">
+        AND line_number = #{lineNumber,jdbcType=INTEGER}
+      </if>
+      <if test="pipeId != null">
+        AND pipe_id = #{pipeId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+</mapper>

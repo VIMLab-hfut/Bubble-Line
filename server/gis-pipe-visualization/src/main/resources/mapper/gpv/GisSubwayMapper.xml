@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hfut.gpv.mapper.GisSubwayMapper">
+  <resultMap id="BaseResultMap" type="cn.hfut.gpv.domain.GisSubway">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="station_name" jdbcType="VARCHAR" property="stationName" />
+    <result column="poi_number" jdbcType="VARCHAR" property="poiNumber" />
+    <result column="station_name_eng" jdbcType="VARCHAR" property="stationNameEng" />
+    <result column="longitude_gd" jdbcType="VARCHAR" property="longitudeGd" />
+    <result column="latitude_gd" jdbcType="VARCHAR" property="latitudeGd" />
+    <result column="metro_name" jdbcType="VARCHAR" property="metroName" />
+    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="longitude_bd" jdbcType="VARCHAR" property="longitudeBd" />
+    <result column="latitude_bd" jdbcType="VARCHAR" property="latitudeBd" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, station_name, poi_number, station_name_eng, longitude_gd, latitude_gd, metro_name, 
+    city_name, region, longitude_bd, latitude_bd
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from gis_subway
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from gis_subway
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="cn.hfut.gpv.domain.GisSubway">
+    insert into gis_subway
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="stationName != null">
+        station_name,
+      </if>
+      <if test="poiNumber != null">
+        poi_number,
+      </if>
+      <if test="stationNameEng != null">
+        station_name_eng,
+      </if>
+      <if test="longitudeGd != null">
+        longitude_gd,
+      </if>
+      <if test="latitudeGd != null">
+        latitude_gd,
+      </if>
+      <if test="metroName != null">
+        metro_name,
+      </if>
+      <if test="cityName != null">
+        city_name,
+      </if>
+      <if test="region != null">
+        region,
+      </if>
+      <if test="longitudeBd != null">
+        longitude_bd,
+      </if>
+      <if test="latitudeBd != null">
+        latitude_bd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stationName != null">
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="poiNumber != null">
+        #{poiNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="stationNameEng != null">
+        #{stationNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="longitudeGd != null">
+        #{longitudeGd,jdbcType=VARCHAR},
+      </if>
+      <if test="latitudeGd != null">
+        #{latitudeGd,jdbcType=VARCHAR},
+      </if>
+      <if test="metroName != null">
+        #{metroName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="longitudeBd != null">
+        #{longitudeBd,jdbcType=VARCHAR},
+      </if>
+      <if test="latitudeBd != null">
+        #{latitudeBd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.hfut.gpv.domain.GisSubway">
+    update gis_subway
+    <set>
+      <if test="stationName != null">
+        station_name = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="poiNumber != null">
+        poi_number = #{poiNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="stationNameEng != null">
+        station_name_eng = #{stationNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="longitudeGd != null">
+        longitude_gd = #{longitudeGd,jdbcType=VARCHAR},
+      </if>
+      <if test="latitudeGd != null">
+        latitude_gd = #{latitudeGd,jdbcType=VARCHAR},
+      </if>
+      <if test="metroName != null">
+        metro_name = #{metroName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="longitudeBd != null">
+        longitude_bd = #{longitudeBd,jdbcType=VARCHAR},
+      </if>
+      <if test="latitudeBd != null">
+        latitude_bd = #{latitudeBd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByCondition" parameterType="cn.hfut.gpv.domain.GisSubway" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from gis_subway
+    <where>
+      <if test="stationName != null">
+        and station_name = #{stationName,jdbcType=VARCHAR}
+      </if>
+      <if test="stationNameEng != null">
+        and station_name_eng = #{stationNameEng,jdbcType=VARCHAR}
+      </if>
+      <if test="metroName != null">
+        and metro_name = #{metroName,jdbcType=VARCHAR}
+      </if>
+      <if test="cityName != null">
+        and city_name = #{cityName,jdbcType=VARCHAR}
+      </if>
+      <if test="region != null">
+        and region = #{region,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+</mapper>

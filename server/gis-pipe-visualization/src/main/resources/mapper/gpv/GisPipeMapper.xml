@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hfut.gpv.mapper.GisPipeMapper">
+  <resultMap id="BaseResultMap" type="cn.hfut.gpv.domain.GisPipe">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="length" jdbcType="DOUBLE" property="length" />
+    <result column="diameter" jdbcType="DOUBLE" property="diameter" />
+    <result column="texture" jdbcType="VARCHAR" property="texture" />
+    <result column="manufacturer" jdbcType="VARCHAR" property="manufacturer" />
+    <result column="line_color" jdbcType="VARCHAR" property="lineColor" />
+    <result column="line_weight" jdbcType="DOUBLE" property="lineWeight" />
+    <result column="nodes" typeHandler="cn.hfut.gpv.config.JSONArrayTypeHandler" property="nodes" />
+    <result column="direction" jdbcType="BIT" property="direction" />
+    <result column="hydraulic_pressure" jdbcType="DOUBLE" property="hydraulicPressure" />
+    <result column="flow" jdbcType="DOUBLE" property="flow" />
+    <result column="friction_coefficient" jdbcType="DOUBLE" property="frictionCoefficient" />
+    <result column="group_number" jdbcType="INTEGER" property="groupNumber" />
+    <result column="initial_weights" typeHandler="cn.hfut.gpv.config.JSONArrayTypeHandler" property="initialWeights" />
+    <result column="initial_values" typeHandler="cn.hfut.gpv.config.JSONArrayTypeHandler" property="initialValues" />
+  </resultMap>
+  <resultMap id="PipelineVOMap" type="cn.hfut.gpv.domain.vo.PipelineVO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="length" jdbcType="DOUBLE" property="length" />
+    <result column="diameter" jdbcType="DOUBLE" property="diameter" />
+    <result column="texture" jdbcType="VARCHAR" property="texture" />
+    <result column="manufacturer" jdbcType="VARCHAR" property="manufacturer" />
+    <result column="line_color" jdbcType="VARCHAR" property="lineColor" />
+    <result column="line_weight" jdbcType="DOUBLE" property="lineWeight" />
+    <result column="nodes" typeHandler="cn.hfut.gpv.config.JSONArrayTypeHandler" property="nodes" />
+    <result column="direction" jdbcType="BIT" property="direction" />
+    <result column="hydraulic_pressure" jdbcType="DOUBLE" property="hydraulicPressure" />
+    <result column="flow" jdbcType="DOUBLE" property="flow" />
+    <result column="friction_coefficient" jdbcType="DOUBLE" property="frictionCoefficient" />
+    <result column="group_number" jdbcType="INTEGER" property="groupNumber" />
+    <result column="ribbon_nodes" typeHandler="cn.hfut.gpv.config.JSONArrayTypeHandler" property="ribbonNodes" />
+    <result column="heat_line_nodes" typeHandler="cn.hfut.gpv.config.JSONArrayTypeHandler" property="heatLineNodes" />
+    <result column="heat_line_weight" typeHandler="cn.hfut.gpv.config.JSONArrayTypeHandler" property="heatLineWeight" />
+    <result column="initial_weights" typeHandler="cn.hfut.gpv.config.JSONArrayTypeHandler" property="initialWeights" />
+    <result column="initial_values" typeHandler="cn.hfut.gpv.config.JSONArrayTypeHandler" property="initialValues" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, `length`, diameter, texture, manufacturer, line_color, line_weight, nodes, direction, hydraulic_pressure, flow, friction_coefficient, group_number, initial_weights, initial_values
+  </sql>
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from gis_pipe
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from gis_pipe
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="cn.hfut.gpv.domain.GisPipe" useGeneratedKeys="true" keyProperty="id">
+    insert into gis_pipe
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="length != null">
+        `length`,
+      </if>
+      <if test="diameter != null">
+        diameter,
+      </if>
+      <if test="texture != null">
+        texture,
+      </if>
+      <if test="manufacturer != null">
+        manufacturer,
+      </if>
+      <if test="lineColor != null">
+        line_color,
+      </if>
+      <if test="lineWeight != null">
+        line_weight,
+      </if>
+      <if test="nodes != null">
+        nodes,
+      </if>
+      <if test="direction != null">
+        direction,
+      </if>
+      <if test="hydraulicPressure != null">
+        hydraulic_pressure,
+      </if>
+      <if test="flow != null">
+        flow,
+      </if>
+      <if test="frictionCoefficient != null">
+        friction_coefficient,
+      </if>
+      <if test="groupNumber != null">
+        group_number,
+      </if>
+      <if test="initialWeights != null">
+        initial_weights,
+      </if>
+      <if test="initialValues != null">
+        initial_values,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null">
+        #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="diameter != null">
+        #{diameter,jdbcType=DOUBLE},
+      </if>
+      <if test="texture != null">
+        #{texture,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturer != null">
+        #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="lineColor != null">
+        #{lineColor,jdbcType=VARCHAR},
+      </if>
+      <if test="lineWeight != null">
+        #{lineWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="nodes != null">
+        #{nodes,typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+      <if test="direction != null">
+        #{direction,jdbcType=BIT},
+      </if>
+      <if test="hydraulicPressure != null">
+        #{hydraulicPressure,jdbcType=DOUBLE},
+      </if>
+      <if test="flow != null">
+        #{flow,jdbcType=DOUBLE},
+      </if>
+      <if test="frictionCoefficient != null">
+        #{frictionCoefficient,jdbcType=DOUBLE},
+      </if>
+      <if test="groupNumber != null">
+        #{groupNumber,jdbcType=INTEGER},
+      </if>
+      <if test="initialWeights != null">
+        #{initialWeights, typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+      <if test="initialValues != null">
+        #{initialValues, typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByIdSelective" parameterType="cn.hfut.gpv.domain.GisPipe">
+    update gis_pipe
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null">
+        `length` = #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="diameter != null">
+        diameter = #{diameter,jdbcType=DOUBLE},
+      </if>
+      <if test="texture != null">
+        texture = #{texture,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturer != null">
+        manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="lineColor != null">
+        line_color = #{lineColor,jdbcType=VARCHAR},
+      </if>
+      <if test="lineWeight != null">
+        line_weight = #{lineWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="nodes != null">
+        nodes = #{nodes,typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+      <if test="direction != null">
+        direction = #{direction,jdbcType=BIT},
+      </if>
+      <if test="hydraulicPressure != null">
+        hydraulic_pressure = #{hydraulicPressure,jdbcType=DOUBLE},
+      </if>
+      <if test="flow != null">
+        flow = #{flow,jdbcType=DOUBLE},
+      </if>
+      <if test="frictionCoefficient != null">
+        friction_coefficient = #{frictionCoefficient,jdbcType=DOUBLE},
+      </if>
+      <if test="groupNumber != null">
+        group_number = #{groupNumber,jdbcType=INTEGER},
+      </if>
+      <if test="initialWeights != null">
+        initial_weights = #{initialWeights, typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+      <if test="initialValues != null">
+        initial_values = #{initialValues, typeHandler=cn.hfut.gpv.config.JSONArrayTypeHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="listPipeSelective" parameterType="cn.hfut.gpv.domain.dto.GisPipeDTO" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from gis_pipe
+    <where>
+      <if test="name != null">
+        and `name` = #{name,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="listPipelineVO" parameterType="java.lang.Integer" resultMap="PipelineVOMap">
+    select
+      p.id, p.`name`, p.`length`, p.diameter, p.texture, p.manufacturer, p.line_color, p.line_weight, p.nodes, p.direction, p.hydraulic_pressure, p.flow, p.friction_coefficient, p.group_number, p.initial_weights, p.initial_values,
+      h.ribbon_nodes, h.heat_line_nodes, h.heat_line_weight
+    from gis_pipe p
+    left join heat_line h on h.pipe_id = p.id
+    <where>
+      <if test="pipeId != null">
+        AND p.id = #{pipeId,jdbcType=INTEGER}
+      </if>
+      <if test="groupNumber != null">
+        AND p.groupNumber = #{id,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+</mapper>

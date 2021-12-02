@@ -1,0 +1,35 @@
+server:
+  tomcat:
+    # 设置Tomcat的URI编码
+    uri-encoding: UTF-8
+  port: 8080
+  servlet:
+    #在后台资源url面前加上此路径
+    context-path: /
+
+# 日志配置
+logging:
+  level:
+    cn.hfut: debug
+    org.springframework: warn
+
+spring:
+   # 多环境配置，暂且用不到
+#  profiles:
+#    active: dev
+  jackson:
+    # 格式化时间
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 配置时区
+    time-zone: GMT+8
+  datasource:
+    master:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/hfut_vis?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: 123456abc
+
+
+
+
