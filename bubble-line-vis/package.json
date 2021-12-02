@@ -1,0 +1,37 @@
+{
+  "name": "vis",
+  "version": "1.0.1",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@geoman-io/leaflet-geoman-free": "^2.11.2",
+    "@smallwei/avue": "^2.8.11",
+    "axios": "^0.21.1",
+    "core-js": "^3.12.1",
+    "d3": "^6.7.0",
+    "echarts": "^5.2.2",
+    "element-ui": "^2.15.3",
+    "heatmap.js": "^2.0.5",
+    "leaflet": "^1.7.1",
+    "leaflet-geosearch": "^3.3.2",
+    "leaflet.chinatmsproviders": "^3.0.4",
+    "scriptjs": "^2.5.9",
+    "vue": "^2.6.11",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-service": "^4.5.13",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
