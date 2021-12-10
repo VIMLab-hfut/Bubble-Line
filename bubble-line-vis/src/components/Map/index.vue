@@ -37,9 +37,9 @@ export default {
       //用来判断当前事件是否是点击事件，防止触发点击事件
       notClickEvent: false,
       //黄山
-      centerP: {lng: 118.3092373345947, lat: 29.697865719744868},
+      //centerP: {lng: 118.3092373345947, lat: 29.697865719744868},
       //合肥
-      //centerP: {lng: 117.26296471923827, lat: 31.832022434850202},
+      centerP: {lng: 117.26296471923827, lat: 31.832022434850202},
       markers: [],
       groupedPipeline: [],
       updatedLayers: new Set(),
@@ -61,6 +61,12 @@ export default {
       },
       populationList: null,
       houseList: null,
+      popUpData: {
+        a: 5231,
+        b: 23564,
+        c: 79,
+        num: 0,
+      }
     };
   },
 
@@ -200,14 +206,14 @@ export default {
       //绘制管线
       for (let i in this.pipes) {
         let line;
-        for (const latLng of this.pipes[i].nodes) {
-          L.circle(latLng, {
-            color: "red",
-            fillColor: "yellow",
-            fillOpacity: 0.8,
-            radius: 6,
-          }).addTo(this.map);
-        }
+        // for (const latLng of this.pipes[i].nodes) {
+        //   L.circle(latLng, {
+        //     color: "red",
+        //     fillColor: "yellow",
+        //     fillOpacity: 0.8,
+        //     radius: 6,
+        //   }).addTo(this.map);
+        // }
         try {
           line = L.polyline(this.pipes[i].nodes, {
             color: this.pipes[i].lineColor,
@@ -530,7 +536,7 @@ export default {
      * 本方法更改默认的Icon
      */
     changeGeomanDefaultIcon(map) {
-      let markerIcon = require("@/assets/image/压力表.png");
+      let markerIcon = require("@/assets/image/合肥地铁.png");
       let markerIcon2x = require("@/assets/image/合肥地铁-2x.png");
       let markerShadow = require("@/assets/image/marker-shadow.png");
       let DefaultIcon = L.icon({
@@ -651,7 +657,7 @@ export default {
     loadMap() {
       let map = L.map("map", {
         center: this.centerP, // 地图中心
-        zoom: 16, //缩放比列
+        zoom: 12, //缩放比列
         zoomControl: false, //禁用 + - 按钮
         doubleClickZoom: false, // 禁用双击放大
         attributionControl: false, // 移除右下角leaflet标识
@@ -727,6 +733,15 @@ export default {
       }
       this.heatLineGroup.addTo(map);
       this.heatLineGroup.on("pm:vertexclick", this.updateInEditMode());
+      this.heatLineGroup.bindTooltip(() => {
+        return "1号线<br>周边人口密度：" + (5656 + (this.popUpData.num++) * 100 + 234) +
+            "人/平方公里<br> 周边房价均价：" + (23564 + this.popUpData.num * 345) +
+            "元/平方米<br>在售房源：" + (63 + this.popUpData.num * 4) + "套"
+      }, {
+        interactive: true,
+        sticky: true,
+        className: 'leaflet-label' //自定义css控制
+      });
       this.ribbonGroup.addTo(map);
       this.markerGroup.addTo(map);
     },

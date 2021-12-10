@@ -27,4 +27,4 @@ npm run build
 涉及到的数据及爬虫代码，链家网房价爬虫代码用python编写，安装python环境即可运行
 
 ### experiment 
-实验相关文件
+实验相关文件及平台操作演示demo
